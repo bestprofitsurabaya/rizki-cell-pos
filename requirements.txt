@@ -4,3 +4,5 @@ plotly
 qrcode
 fpdf
 pillow
+openpyxl
+xlsxwriter
