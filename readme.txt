@@ -1,76 +1,77 @@
 # 📖 PANDUAN PENGGUNAAN (USER MANUAL)
-**Sistem Manajemen Terpadu: Rizki Cell ERP V10**
+**Sistem Manajemen Terpadu: Rizki Cell ERP V12**
 
-Dokumen ini memuat panduan lengkap penggunaan seluruh fitur aplikasi Rizki Cell, mulai dari manajemen kasir, inventaris, hingga laporan keuangan.
+Dokumen ini memuat panduan lengkap operasional aplikasi Rizki Cell, mencakup manajemen multi-cabang, sistem kasir ganda (Fisik & PPOB), rekam jejak audit, dan keamanan sistem.
 
 ## 1. Hak Akses & Kredensial Login
-Sistem dilengkapi dengan keamanan enkripsi ganda. Terdapat dua tingkatan akses default saat aplikasi pertama kali dijalankan:
+Sistem dilengkapi keamanan enkripsi *hash*. Terdapat dua akun bawaan (default) saat pertama kali digunakan:
 
-| Tipe Akun | Username | Password | Wilayah Akses | Hak Istimewa |
+| Tipe Akun | Username | Password | Penempatan | Hak Istimewa |
 | :--- | :--- | :--- | :--- | :--- |
-| **Owner (Pemilik)** | `owner` | `master` | Pusat | Akses penuh (Dashboard, Audit, Edit, Hapus) |
-| **Admin (Kasir)** | `admin1` | `admin` | Cabang 1 | Terbatas (Hanya Kasir, Buka/Tutup Shift) |
+| **Owner** | `owner` | `master` | Pusat | Akses penuh seluruh modul & pengaturan HR. |
+| **Admin** | `admin1` | `admin` | Cabang 1 | Terbatas pada kasir, absen shift, & pelunasan. |
+
+> **Catatan Keamanan:** Setiap aksi di dalam sistem akan terekam atas nama *Username* yang sedang *login*. Jangan membagikan *password* Anda kepada staf lain.
 
 ---
 
-## 2. Modul Kasir Umum (Fisik)
-Modul ini digunakan untuk mencatat transaksi penjualan barang fisik seperti HP, Aksesoris, dan Voucher Fisik.
-
-* **Buka Shift:** Admin diwajibkan memasukkan modal uang receh (tunai) di laci kasir sebelum bisa memulai transaksi.
-* **Pencarian Barang:** Gunakan kotak *dropdown* untuk mengetik dan mencari nama barang dengan cepat.
-* **Metode Pembayaran (QRIS):** Jika pelanggan memilih QRIS, sistem akan memunculkan *barcode* unik di layar yang bisa langsung di-*scan* oleh pelanggan.
-* **Metode Pembayaran (Tempo):** Digunakan untuk pelanggan yang berhutang (Kasbon). Anda **wajib** mengisi nama pelanggan agar sistem bisa mencatatnya ke dalam Buku Piutang.
+## 2. Alur Kerja Harian (Standard Operating Procedure)
+Untuk memastikan data tidak berantakan, ikuti urutan kerja harian berikut:
+1.  **Buka Toko:** Admin *login*, masuk ke menu "Kasir", lalu menginput uang tunai modal awal untuk membuka *shift*.
+2.  **Operasional:** Admin melayani transaksi Fisik maupun PPOB.
+3.  **Tutup Toko:** Admin menghitung uang fisik di laci, masuk ke menu "Selesai Shift", dan menutup *shift* tersebut.
 
 ---
 
-## 3. Modul Kasir PPOB (Pulsa & Tagihan)
-Modul khusus untuk produk digital (Pulsa, Paket Data, Token Listrik) tanpa memotong stok fisik di inventaris.
+## 3. Penjelasan Lengkap Modul Sistem
 
-* **Input Nomor:** Masukkan nomor tujuan pelanggan.
-* **Pilih Nominal:** Pilih besaran nominal pulsa/kuota. Sistem otomatis menambahkan *margin* keuntungan (misal: markup Rp 2.000).
-* **Proses Tembak:** Menekan tombol transaksi akan mencatat penjualan PPOB secara terpisah di laporan keuangan, membedakannya dari omzet toko fisik.
+### 📊 Dashboard & Keuntungan (Khusus Owner)
+Pusat analitik bisnis yang memberikan ringkasan keuangan *real-time*.
+* **Pencapaian HARI INI:** Menampilkan total Omzet dan Profit yang akan otomatis di-*reset* ke angka nol (0) setiap jam 12 malam.
+* **Peringatan Saldo:** Jika Saldo Deposit PPOB (Server) di bawah Rp 100.000, akan muncul peringatan merah menyala agar Owner segera melakukan *Top-Up*.
+* **Statistik Sepanjang Waktu:** Menampilkan akumulasi penjualan fisik maupun PPOB beserta grafiknya.
 
----
+### 👥 Karyawan & Cabang (Khusus Owner)
+Modul Human Resources (HR) untuk mengelola *franchise* / cabang.
+* **Data Cabang:** Fitur untuk membuat lokasi cabang baru (Misal: Cabang Sudirman).
+* **Data Karyawan:** Fitur untuk membuat akun staf baru. Anda **wajib** menempatkan staf tersebut di cabang tertentu. Transaksi staf tersebut nantinya akan otomatis masuk ke laporan cabang yang dituju.
 
-## 4. Modul Inventori & Excel Import (Khusus Owner)
-Pusat kendali barang dan harga. Terdapat tiga tab utama di dalam modul ini:
+### 💳 Manajemen Saldo PPOB (Khusus Owner)
+Buku besar (*Ledger*) untuk mengatur uang virtual (deposit pulsa).
+* **Top-Up Saldo:** Jika Owner mentransfer uang ke aplikasi agen (misal Digiflazz), Owner wajib mencatatnya di sini agar kasir bisa mulai berjualan pulsa.
+* **Riwayat Mutasi:** Menampilkan aliran dana PPOB (Uang Masuk dari Top-Up, Uang Keluar dari Transaksi Kasir).
 
-* **Daftar Stok & Supplier:** Menampilkan tabel seluruh barang yang tersedia beserta nama supplier-nya.
-* **Input Manual:** Formulir untuk memasukkan satu per satu barang baru. Anda bisa memilih nama supplier dari daftar yang sudah ada.
-* **Import Massal (Excel):** Fitur untuk memasukkan ratusan barang sekaligus.
-    1.  Klik **Download Template Excel**.
-    2.  Isi data di komputer menggunakan Microsoft Excel.
-    3.  *Upload* kembali file tersebut. Sistem akan otomatis membuatkan nama supplier baru jika belum terdaftar, memperbarui stok jika barang sudah ada, dan menambah barang baru jika belum terdaftar.
+### 📦 Inventori & Excel Import
+Pusat manajemen stok barang fisik (Casing, HP, Voucher, dll).
+* **Input Manual:** Mendaftarkan barang satu per satu beserta nama *supplier*-nya.
+* **Import Massal (Excel):** Fitur memperbarui ratusan barang dalam 1 detik.
+    1. Klik **Download Template Excel**.
+    2. Isi data menggunakan Microsoft Excel.
+    3. *Upload* kembali file tersebut. Sistem pintar akan otomatis menambah stok (jika barang sudah ada) atau membuat barang baru (jika belum ada).
 
----
+### 🛒 Kasir Umum (Fisik)
+Modul untuk menjual barang berwujud fisik yang memotong stok inventori.
+* Sistem mewajibkan Admin mencentang **Kotak Konfirmasi** sebelum tombol "Proses Pembayaran" bisa diklik (Mencegah salah klik).
+* Mendukung fitur kasbon dengan memilih metode **"Tempo"**. Nama pelanggan wajib diisi.
+* Mendukung fitur **QRIS** yang otomatis memunculkan *barcode* di layar.
 
-## 5. Buku Piutang (Kasbon)
-Modul untuk memantau arus piutang dan tagihan pelanggan.
+### ⚡ Kasir PPOB (Pulsa & Digital)
+Modul khusus produk digital yang **tidak memotong stok barang**, melainkan **memotong Saldo Deposit PPOB**.
+* Kasir cukup memasukkan Nomor HP dan memilih Modal Server.
+* Sistem secara pintar menghitung tagihan berdasarkan *Markup* keuntungan yang ditentukan.
+* Jika saldo server di sistem kurang dari modal transaksi, tombol transaksi akan terkunci dan menampilkan pesan *Error*.
 
-* **Pemantauan Hutang:** Menampilkan tabel daftar pelanggan yang memiliki transaksi dengan metode "Tempo" (Belum Lunas).
-* **Pelunasan:** Owner dapat memilih ID transaksi dari *dropdown* dan menekan tombol **Tandai Lunas**. Data hutang akan otomatis hilang dari daftar tunggu dan tercatat lunas di log sistem.
+### 📝 Buku Piutang
+Fitur penagihan pelanggan yang sering melakukan kasbon.
+* Menampilkan daftar pelanggan yang status transaksinya masih **"Belum Lunas"**.
+* Saat pelanggan membayar, Admin/Owner bisa memilih ID Transaksi dan mengklik tombol **"Tandai Lunas"**. Data akan otomatis hilang dari daftar tunggu.
 
----
+### 📜 Histori & Audit (Mata-Mata Sistem)
+Jejak digital (CCTV Sistem) yang tidak bisa dihapus oleh siapa pun.
+* Mencatat seluruh notifikasi yang muncul di layar (Pojok Kanan Atas).
+* Merekam **Siapa** yang melakukan, **Kapan** dilakukan, dan **Apa** yang diubah (misalnya detail omzet yang didapat atau uang fisik yang dilaporkan saat tutup shift).
 
-## 6. Dashboard & Keuntungan (Khusus Owner)
-Pusat analitik bisnis yang menampilkan ringkasan keuangan secara visual.
-
-* **Pencapaian HARI INI:** Panel atas menampilkan Omzet, Jumlah Transaksi, dan Profit Bersih khusus untuk hari tersebut (di-*reset* setiap tengah malam).
-* **Statistik Sepanjang Waktu:** Menampilkan akumulasi seluruh penjualan sejak toko beroperasi.
-* **Grafik Interaktif:** Menyajikan diagram batang (penjualan per cabang) dan diagram lingkaran (distribusi barang terlaris).
-
----
-
-## 7. Histori & Audit (Sistem Keamanan)
-Mata-mata sistem yang mencatat seluruh jejak digital pengguna.
-
-* **Log Aktivitas:** Merekam tanggal, nama akun (user), jenis aksi (Login, Import Excel, Transaksi, Edit Barang), dan detail perubahannya.
-* **Transparansi:** Mencegah kecurangan admin karena setiap perubahan sekecil apa pun tidak bisa dihapus dari log ini.
-
----
-
-## 8. Selesai Shift (Penutupan)
-Langkah wajib bagi kasir sebelum meninggalkan toko.
-
-* **Perhitungan Fisik:** Admin wajib menghitung ulang uang tunai yang ada di dalam laci secara manual dan menginputnya ke sistem.
-* **Penutupan:** Menekan tombol "Tutup Shift" akan mengunci sesi kasir tersebut dan memastikan data uang di laci terekam di database untuk dicocokkan oleh Owner keesokan harinya.
+### 🏁 Selesai Shift
+Modul khusus untuk sinkronisasi kas toko di penghujung hari kerja.
+* Admin **wajib** menghitung fisik uang tunai di dalam laci toko.
+* Setelah menekan tombol konfirmasi dan "Tutup Shift", sistem akan mengunci akun admin dari transaksi lebih lanjut hingga ia membuka *shift* baru keesokan harinya.
